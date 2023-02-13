@@ -1,5 +1,6 @@
 package com.example.foodcompose
 
+import android.icu.text.CaseMap.Title
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,17 +14,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.foodcompose.ui.theme.ImageRow
 import com.example.foodcompose.ui.theme.OnPrimary
+import com.example.foodcompose.ui.theme.appGreen
+import com.example.foodcompose.ui.theme.rounded30
 import java.util.Locale
 import kotlin.collections.ArrayList
 
@@ -68,7 +74,7 @@ fun SearchBar(state: MutableState<TextFieldValue>, onClick: () -> Unit) {
             }
         },
         singleLine = true,
-        shape = RoundedCornerShape(30.dp), // The TextFiled has rounded corners top left and right by default
+        shape = rounded30, // The TextFiled has rounded corners top left and right by default
         colors = TextFieldDefaults.textFieldColors(
             textColor = OnPrimary,
             cursorColor = OnPrimary,
@@ -161,9 +167,44 @@ fun ItemImage(@DrawableRes image: Int) {
     )
 }
 
-//@Composable
-//fun TitleDetails(text : String){
-//    Text(text = "$text", modifier = Modifier.wrapContentSize(Alignment.CenterStart))
-//}
-//
+@Composable
+fun ProfileInfoRow(title: String, text: String) {
+    val titleStyle = TextStyle(color = appGreen, fontWeight = FontWeight.Bold)
+    val contextStyle = TextStyle(color = appGreen)
+    Spacer(modifier = Modifier.padding(10.dp))
+    Row {
+        Text(
+            text = title,
+            modifier = Modifier
+                .wrapContentSize(Alignment.CenterStart),
+            style = titleStyle
+        )
+        Text(
+            text = text,
+            style = contextStyle
+        )
+    }
+}
 
+@Composable
+fun ThickTitle(text: String){
+    Text(
+        text = text,
+        modifier = Modifier
+            .wrapContentSize(Alignment.CenterStart),
+        style = TextStyle(
+            color = Color(0xFF999999),
+            fontWeight = FontWeight.ExtraBold
+        )
+    )
+}
+@Composable
+fun CreditField(){
+    val text = ""
+    Spacer(modifier = Modifier.padding(10.dp))
+    TextField(
+        value = text,
+        onValueChange = { /*TODO*/ },
+        shape = rounded30
+    )
+}

@@ -1,7 +1,6 @@
 package com.example.foodcompose
 
 import android.os.Bundle
-import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -17,15 +16,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.foodcompose.ui.theme.FoodComposeTheme
-import com.example.foodcompose.ui.theme.FoodList
-import com.example.foodcompose.ui.theme.Primary
-import com.example.foodcompose.ui.theme.appGreen
+import com.example.foodcompose.ui.theme.*
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterialApi::class)
@@ -49,7 +44,6 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier
                                 .background(Color.Transparent, shape = shape)
                                 .padding(20.dp)
-//                                .clip(shape)
                         ) {
                             SearchBar(textState, { isSearching = !isSearching })
                             Column(
@@ -79,7 +73,7 @@ class MainActivity : ComponentActivity() {
                     //payment method
                     Column(
                         modifier = Modifier
-                            .background(Color(0xFF406A52))
+                            .background(appGreen)
                             .fillMaxHeight()
                     ) {
                         Spacer(modifier = Modifier.padding(30.dp))
@@ -112,6 +106,7 @@ class MainActivity : ComponentActivity() {
                             Spacer(modifier = Modifier.padding(30.dp))
                         }
                         Column {
+                            val commonTextSize = TextStyle(color = appGreen, fontWeight = FontWeight.Bold)
                             Card(
                                 modifier = Modifier
                                     .padding(30.dp)
@@ -121,73 +116,17 @@ class MainActivity : ComponentActivity() {
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(20.dp, 10.dp)
+
                                 ) {
-                                    val commonTextSize = TextStyle(color = appGreen, fontWeight = FontWeight.Bold)
-                                    Text(
-                                        text = "Profile Info",
-                                        modifier = Modifier
-                                            .align(Alignment.Start),
-                                        style = TextStyle(
-                                            color = Color(0xFF999999),
-                                            fontWeight = FontWeight.ExtraBold
-                                        )
-                                    )
-                                    Spacer(modifier = Modifier.padding(10.dp))
-                                    Text(
-                                        text = "AGE: 26",
-                                        modifier = Modifier
-                                            .align(Alignment.Start),
-                                        style = commonTextSize
-                                    )
-                                    Spacer(modifier = Modifier.padding(5.dp))
-                                    Text(
-                                        text = "About me: Cool,like to swim",
-                                        modifier = Modifier.align(Alignment.Start),
-                                        style = commonTextSize
-                                    )
-                                    Spacer(modifier = Modifier.padding(5.dp))
-                                    Text(
-                                        text = "Country/City: United Kingdom",
-                                        modifier = Modifier
-                                            .align(Alignment.Start),
-                                        style = commonTextSize
-                                    )
-                                    Spacer(modifier = Modifier.padding(5.dp))
-                                    Text(
-                                        text = "Delivery Address",
-                                        modifier = Modifier
-                                            .align(Alignment.Start),
-                                        style = commonTextSize
-                                    )
-                                    Spacer(modifier = Modifier.padding(10.dp))
-                                    Text(
-                                        text = "Credit & Debit Cards",
-                                        modifier = Modifier
-                                            .align(Alignment.Start),
-                                        style = TextStyle(
-                                            color = Color(0xFF999999),
-                                            fontWeight = FontWeight.ExtraBold
-                                        )
-                                    )
-                                    Column() {
-                                        Spacer(modifier = Modifier.padding(10.dp))
-                                        TextField(
-                                            value = textField,
-                                            onValueChange = { /*TODO*/ },
-                                            modifier = Modifier.clip(shape)
-                                        )
-                                        Spacer(modifier = Modifier.padding(5.dp))
-                                        TextField(
-                                            value = textField,
-                                            onValueChange = { /*TODO*/ },
-                                            modifier = Modifier.clip(shape)
-                                        )
-                                        Spacer(modifier = Modifier.padding(5.dp))
-                                        TextField(
-                                            value = textField,
-                                            onValueChange = { /*TODO*/ },
-                                            modifier = Modifier.clip(shape)
-                                        )
+                                    ThickTitle("Profile Info")
+                                    ProfileInfoRow(title = "Age:", text = "26")
+                                    ProfileInfoRow(title = "AboutMe:", text = "love Swimming")
+                                    ProfileInfoRow(title = "Country/City:", text = "United Kingdom")
+                                    ProfileInfoRow(title = "Delivery Address:", text = "Baker's Street 221b c/o Miller")
+                                    Column {
+                                        CreditField()
+                                        CreditField()
+                                        CreditField()
                                     }
 
                                     Button(
@@ -196,7 +135,8 @@ class MainActivity : ComponentActivity() {
                                         modifier = Modifier
                                             .clip(shape)
                                             .fillMaxWidth()
-                                            .padding(30.dp)
+                                            .padding(30.dp),
+                                        shape = rounded30
                                     )
                                 }
 
