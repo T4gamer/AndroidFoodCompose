@@ -24,6 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.foodcompose.ui.theme.FoodComposeTheme
 import com.example.foodcompose.ui.theme.FoodList
+import com.example.foodcompose.ui.theme.Primary
+import com.example.foodcompose.ui.theme.appGreen
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterialApi::class)
@@ -36,33 +38,41 @@ class MainActivity : ComponentActivity() {
                 val shape = RoundedCornerShape(30.dp)
                 // A surface container using the 'background' color from the theme
                 BottomSheetScaffold(modifier = Modifier
-                    .background(Color(0xFF406A52))
+                    .background(appGreen)
                     .wrapContentSize(Alignment.Center), scaffoldState = scaffoldState,
+                    sheetShape = shape,
                     sheetContent = {
                         //food Prices
                         val textState = remember { mutableStateOf(TextFieldValue("")) }
+
                         Column(
                             modifier = Modifier
                                 .background(Color.Transparent, shape = shape)
-                                .clip(shape)
+                                .padding(20.dp)
+//                                .clip(shape)
                         ) {
                             SearchBar(textState, { isSearching = !isSearching })
                             Column(
                                 verticalArrangement = Arrangement.spacedBy(20.dp),
                                 modifier = Modifier
-                                    .background(Color(0xFFECECEC), shape = shape)
+                                    .background(Primary, shape = shape)
                                     .clip(shape)
-//                                    .width(300.dp)
-
                             ) {
                                 Text(
                                     text = "Recent Orders:",
                                     modifier = Modifier
-                                        .padding(10.dp)
+                                        .padding(15.dp),
+                                    style = TextStyle(
+                                        color = appGreen,
+                                        fontWeight = FontWeight.ExtraBold,
+                                        fontSize = 30.sp
+                                    )
                                 )
                                 ListItem(list = FoodList.List)
                             }
                         }
+
+
                     }
                 ) {
                     val textField: String = ""
@@ -112,40 +122,42 @@ class MainActivity : ComponentActivity() {
                                         .fillMaxWidth()
                                         .padding(20.dp, 10.dp)
                                 ) {
-
+                                    val commonTextSize = TextStyle(color = appGreen, fontWeight = FontWeight.Bold)
                                     Text(
                                         text = "Profile Info",
                                         modifier = Modifier
                                             .align(Alignment.Start),
-                                        style = TextStyle(color = Color(0xFF999999)),
-                                        fontWeight = FontWeight.ExtraBold
+                                        style = TextStyle(
+                                            color = Color(0xFF999999),
+                                            fontWeight = FontWeight.ExtraBold
+                                        )
                                     )
                                     Spacer(modifier = Modifier.padding(10.dp))
                                     Text(
                                         text = "AGE: 26",
                                         modifier = Modifier
                                             .align(Alignment.Start),
-                                        style = TextStyle(color = Color(0xFF406A52))
+                                        style = commonTextSize
                                     )
                                     Spacer(modifier = Modifier.padding(5.dp))
                                     Text(
                                         text = "About me: Cool,like to swim",
                                         modifier = Modifier.align(Alignment.Start),
-                                        style = TextStyle(color = Color(0xFF406A52))
+                                        style = commonTextSize
                                     )
                                     Spacer(modifier = Modifier.padding(5.dp))
                                     Text(
                                         text = "Country/City: United Kingdom",
                                         modifier = Modifier
                                             .align(Alignment.Start),
-                                        style = TextStyle(color = Color(0xFF406A52))
+                                        style = commonTextSize
                                     )
                                     Spacer(modifier = Modifier.padding(5.dp))
                                     Text(
                                         text = "Delivery Address",
                                         modifier = Modifier
                                             .align(Alignment.Start),
-                                        style = TextStyle(color = Color(0xFF406A52))
+                                        style = commonTextSize
                                     )
                                     Spacer(modifier = Modifier.padding(10.dp))
                                     Text(
@@ -157,29 +169,29 @@ class MainActivity : ComponentActivity() {
                                             fontWeight = FontWeight.ExtraBold
                                         )
                                     )
-                                    Card {
-                                        Column() {
-                                            Spacer(modifier = Modifier.padding(10.dp))
-                                            TextField(
-                                                value = textField,
-                                                onValueChange = { /*TODO*/ },
-                                                modifier = Modifier.clip(shape)
-                                            )
-                                            Spacer(modifier = Modifier.padding(5.dp))
-                                            TextField(
-                                                value = textField,
-                                                onValueChange = { /*TODO*/ },
-                                                modifier = Modifier.clip(shape)
-                                            )
-                                            Spacer(modifier = Modifier.padding(5.dp))
-                                            TextField(
-                                                value = textField,
-                                                onValueChange = { /*TODO*/ },
-                                                modifier = Modifier.clip(shape)
-                                            )
-                                        }
+                                    Column() {
+                                        Spacer(modifier = Modifier.padding(10.dp))
+                                        TextField(
+                                            value = textField,
+                                            onValueChange = { /*TODO*/ },
+                                            modifier = Modifier.clip(shape)
+                                        )
+                                        Spacer(modifier = Modifier.padding(5.dp))
+                                        TextField(
+                                            value = textField,
+                                            onValueChange = { /*TODO*/ },
+                                            modifier = Modifier.clip(shape)
+                                        )
+                                        Spacer(modifier = Modifier.padding(5.dp))
+                                        TextField(
+                                            value = textField,
+                                            onValueChange = { /*TODO*/ },
+                                            modifier = Modifier.clip(shape)
+                                        )
                                     }
-                                    Button(content = { Text(text = "Change Info") },
+
+                                    Button(
+                                        content = { Text(text = "Change Info") },
                                         onClick = { /*TODO*/ },
                                         modifier = Modifier
                                             .clip(shape)
