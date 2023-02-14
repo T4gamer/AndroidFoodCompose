@@ -135,7 +135,7 @@ fun SearchListItem(ItemText: String, onItemClick: (String) -> Unit) {
 @Composable
 fun ListItem(list: List<ImageRow>) {
     LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(5.dp),
+        verticalArrangement = Arrangement.spacedBy(0.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
         items(list) {
@@ -300,14 +300,16 @@ fun BeforePayment() {
         Modifier
             .background(appGreen)
             .fillMaxWidth()
-            .height(100.dp)) {
+            .requiredHeight(200.dp)
+            ) {
         Text(
-            text = "jackie Miller", modifier = Modifier
+            text = "Hey jackie what you want to eat Today", modifier = Modifier
                 .align(Alignment.CenterVertically)
-                .padding(50.dp, 20.dp),
+                .padding(start = 30.dp, end = 10.dp)
+                .weight(1f),
             style = TextStyle(
                 color = Color.White,
-                fontSize = 30.sp,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.ExtraBold
             )
         )
@@ -316,7 +318,9 @@ fun BeforePayment() {
             contentDescription = "profile",
             modifier = Modifier
                 .align(Alignment.CenterVertically)
-                .wrapContentWidth(Alignment.End)
+                .wrapContentWidth(Alignment.CenterHorizontally)
+                .weight(0.5f)
+                .size(100.dp)
         )
     }
 }

@@ -3,6 +3,7 @@ package com.example.foodcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -11,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.foodcompose.ui.theme.*
@@ -37,6 +39,9 @@ class MainActivity : ComponentActivity() {
                                 .padding(20.dp)
                         ) {
                             SearchBar(textState) { isSearching = !isSearching }
+//                            if(isSearching){
+//                                SearchList(state = textState)
+//                            }
                             Column(
                                 verticalArrangement = Arrangement.spacedBy(20.dp),
                                 modifier = Modifier
@@ -53,7 +58,23 @@ class MainActivity : ComponentActivity() {
                     if (scaffoldState.bottomSheetState.isCollapsed) {
                         PaymentMethod()
                     } else {
-                        BeforePayment()
+                        val density = LocalDensity.current
+                        AnimatedVisibility(
+                            visible = scaffoldState.bottomSheetState.isExpanded,
+                            enter = slideInVertically {
+                                // Slide in from 40 dp from the top.
+                                with(density) { -40.dp.roundToPx() }
+                            } + expandVertically(
+                                // Expand from the top.
+                                expandFrom = Alignment.Top
+                            ) + fadeIn(
+                                // Fade in with the initial alpha of 0.3f.
+                                initialAlpha = 0.3f
+                            ),
+                            exit = slideOutVertically() + shrinkVertically() + fadeOut()
+                        ) {
+                            BeforePayment()
+                        }
                     }
                 }
             }
