@@ -1,6 +1,5 @@
 package com.example.foodcompose
 
-import android.icu.text.CaseMap.Title
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -8,7 +7,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -18,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -59,8 +56,8 @@ fun SearchBar(state: MutableState<TextFieldValue>, onClick: () -> Unit) {
                 IconButton(
                     onClick = {
                         state.value =
-                            TextFieldValue("") // Remove text from TextField when you press the 'X' icon
-
+                            TextFieldValue("")
+                    // Remove text from TextField when you press the 'X' icon
                     }
                 ) {
                     Icon(
@@ -171,7 +168,7 @@ fun ItemImage(@DrawableRes image: Int) {
 fun ProfileInfoRow(title: String, text: String) {
     val titleStyle = TextStyle(color = appGreen, fontWeight = FontWeight.Bold)
     val contextStyle = TextStyle(color = appGreen)
-    Spacer(modifier = Modifier.padding(10.dp))
+    Spacer(modifier = Modifier.padding(5.dp))
     Row {
         Text(
             text = title,
@@ -187,7 +184,7 @@ fun ProfileInfoRow(title: String, text: String) {
 }
 
 @Composable
-fun ThickTitle(text: String){
+fun ThickTitle(text: String) {
     Text(
         text = text,
         modifier = Modifier
@@ -198,8 +195,24 @@ fun ThickTitle(text: String){
         )
     )
 }
+
 @Composable
-fun CreditField(){
+fun ThickTitle(text: String, color: Color) {
+    Text(
+        text = text,
+        modifier = Modifier
+            .wrapContentSize(Alignment.CenterStart)
+            .padding(15.dp),
+        style = TextStyle(
+            color = color,
+            fontSize = 30.sp,
+            fontWeight = FontWeight.ExtraBold
+        )
+    )
+}
+
+@Composable
+fun CreditField() {
     val text = ""
     Spacer(modifier = Modifier.padding(10.dp))
     TextField(
@@ -207,4 +220,103 @@ fun CreditField(){
         onValueChange = { /*TODO*/ },
         shape = rounded30
     )
+}
+
+@Composable
+fun PaymentMethod() {
+    Column(
+        modifier = Modifier
+            .background(appGreen)
+            .fillMaxHeight()
+    ) {
+        Spacer(modifier = Modifier.padding(5.dp))
+        Row(
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Column(
+                modifier = Modifier
+                    .wrapContentSize(Alignment.CenterStart)
+            ) {
+                ThickTitle(text = "Jackie Miller", Color.White)
+                Text(
+                    text = "jackieMiller@gmail.com",
+                    modifier = Modifier
+                        .wrapContentSize(Alignment.Center)
+                        .padding(start = 20.dp),
+                    style = TextStyle(color = Color.White)
+                )
+            }
+            Image(
+                painter = painterResource(id = R.drawable.ellipse_5),
+                contentDescription = "profile",
+                modifier = Modifier
+                    .wrapContentSize(Alignment.Center)
+                    .padding(end = 15.dp)
+            )
+        }
+        Column {
+            Card(
+                modifier = Modifier
+                    .padding(30.dp)
+                    .clip(rounded30)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp, 10.dp)
+                ) {
+                    ThickTitle("Profile Info")
+                    ProfileInfoRow(title = "Age:", text = "26")
+                    ProfileInfoRow(title = "AboutMe:", text = "love Swimming")
+                    ProfileInfoRow(title = "Country/City:", text = "United Kingdom")
+                    ProfileInfoRow(
+                        title = "Delivery Address:",
+                        text = "Baker's Street 221b c/o Miller"
+                    )
+                    Column {
+                        CreditField()
+                        CreditField()
+                        CreditField()
+                    }
+
+                    Button(
+                        content = { Text(text = "Change Info") },
+                        onClick = { /*TODO*/ },
+                        modifier = Modifier
+                            .clip(rounded30)
+                            .fillMaxWidth()
+                            .padding(30.dp),
+                        shape = rounded30
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun BeforePayment() {
+    Row(
+        Modifier
+            .background(appGreen)
+            .fillMaxWidth()
+            .height(100.dp)) {
+        Text(
+            text = "jackie Miller", modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .padding(50.dp, 20.dp),
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 30.sp,
+                fontWeight = FontWeight.ExtraBold
+            )
+        )
+        Image(
+            painter = painterResource(id = R.drawable.ellipse_5),
+            contentDescription = "profile",
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .wrapContentWidth(Alignment.End)
+        )
+    }
 }
