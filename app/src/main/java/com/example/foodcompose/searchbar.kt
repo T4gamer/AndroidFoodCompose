@@ -11,6 +11,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.materialIcon
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,7 +41,7 @@ fun SearchBar(state: MutableState<TextFieldValue>, onClick: () -> Unit) {
         },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp)
+            .padding(5.dp)
             .clickable { onClick() },
         textStyle = TextStyle(color = OnPrimary, fontSize = 18.sp),
         leadingIcon = {
@@ -57,7 +59,7 @@ fun SearchBar(state: MutableState<TextFieldValue>, onClick: () -> Unit) {
                     onClick = {
                         state.value =
                             TextFieldValue("")
-                    // Remove text from TextField when you press the 'X' icon
+                        // Remove text from TextField when you press the 'X' icon
                     }
                 ) {
                     Icon(
@@ -218,7 +220,8 @@ fun CreditField() {
     TextField(
         value = text,
         onValueChange = { /*TODO*/ },
-        shape = rounded30
+        shape = rounded30,
+        trailingIcon = { Icon(Icons.Default.Settings, contentDescription = "settings") }
     )
 }
 
@@ -299,9 +302,11 @@ fun BeforePayment() {
     Row(
         Modifier
             .background(appGreen)
-            .fillMaxWidth()
-            .requiredHeight(200.dp)
-            ) {
+            .fillMaxSize()
+            .wrapContentSize(Alignment.TopCenter)
+            .padding(20.dp)
+//            .requiredHeight(200.dp)
+    ) {
         Text(
             text = "Hey jackie what you want to eat Today", modifier = Modifier
                 .align(Alignment.CenterVertically)
@@ -322,5 +327,6 @@ fun BeforePayment() {
                 .weight(0.5f)
                 .size(100.dp)
         )
+
     }
 }

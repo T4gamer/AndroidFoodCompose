@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.*
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -14,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.example.foodcompose.ui.theme.*
 
@@ -28,8 +31,11 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 BottomSheetScaffold(modifier = Modifier
                     .background(appGreen)
-                    .wrapContentSize(Alignment.Center), scaffoldState = scaffoldState,
+                    .wrapContentSize(Alignment.Center),
+                    scaffoldState = scaffoldState,
                     sheetShape = rounded30,
+                    sheetPeekHeight = 90.dp,
+                    sheetElevation = 100.dp,
                     sheetContent = {
                         //food Prices
                         val textState = remember { mutableStateOf(TextFieldValue("")) }
@@ -38,6 +44,14 @@ class MainActivity : ComponentActivity() {
                                 .background(Color.Transparent, shape = rounded30)
                                 .padding(20.dp)
                         ) {
+                            Row(
+                                modifier = Modifier
+                                    .background(Primary)
+                                    .clip(rounded30)
+                                    .size(200.dp, 5.dp)
+                                    .padding(10.dp)
+                                    .align(Alignment.CenterHorizontally)
+                            ) {}
                             SearchBar(textState) { isSearching = !isSearching }
 //                            if(isSearching){
 //                                SearchList(state = textState)
@@ -55,26 +69,28 @@ class MainActivity : ComponentActivity() {
                     }
                 ) {
                     //payment method
-                    if (scaffoldState.bottomSheetState.isCollapsed) {
+                    val state = scaffoldState.bottomSheetState.isCollapsed
+                    val animationTime = 300
+                    AnimatedVisibility(
+                        !state,
+                        modifier = Modifier.fillMaxSize(),
+                        enter = slideInVertically(
+                            initialOffsetY = { -it },
+                            animationSpec = tween(durationMillis = 500, easing = LinearEasing)
+                        ),
+                        exit = slideOutVertically(
+                            targetOffsetY = { it },
+                            animationSpec = tween(durationMillis = 500,easing = LinearEasing)
+                        )
+                    ) {
+                        BeforePayment()
+                    }
+                    AnimatedVisibility(
+                        state,
+//                        enter = slideInVertically(
+//                            initialOffsetY = { -it })
+                    ) {
                         PaymentMethod()
-                    } else {
-                        val density = LocalDensity.current
-                        AnimatedVisibility(
-                            visible = scaffoldState.bottomSheetState.isExpanded,
-                            enter = slideInVertically {
-                                // Slide in from 40 dp from the top.
-                                with(density) { -40.dp.roundToPx() }
-                            } + expandVertically(
-                                // Expand from the top.
-                                expandFrom = Alignment.Top
-                            ) + fadeIn(
-                                // Fade in with the initial alpha of 0.3f.
-                                initialAlpha = 0.3f
-                            ),
-                            exit = slideOutVertically() + shrinkVertically() + fadeOut()
-                        ) {
-                            BeforePayment()
-                        }
                     }
                 }
             }
