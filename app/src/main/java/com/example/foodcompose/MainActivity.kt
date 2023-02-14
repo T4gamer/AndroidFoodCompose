@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
                                 .background(Color.Transparent, shape = rounded30)
                                 .padding(20.dp)
                         ) {
-                            SearchBar(textState, { isSearching = !isSearching })
+                            SearchBar(textState) { isSearching = !isSearching }
                             Column(
                                 verticalArrangement = Arrangement.spacedBy(20.dp),
                                 modifier = Modifier
